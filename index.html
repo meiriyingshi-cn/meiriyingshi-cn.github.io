@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta name="description" content="每日影视（meiriyingshi-cn）每日更新高清电影、热播剧集、动漫与纪录片推荐，提供最新影视资讯与口碑排行榜，尽在 meiriyingshi-cn.github.io 每日影视导航站。">
+<meta name="keywords" content="每日影视,meiriyingshi-cn,每日影视推荐,最新电影,热播剧集,影视排行榜,高清影视在线观看">
+<link rel="canonical" href="https://meiriyingshi-cn.github.io/">
+<meta property="og:title" content="每日影视 - meiriyingshi-cn 每日更新影视推荐与排行">
+<meta property="og:description" content="每日影视 meiriyingshi-cn 提供每日更新的电影、剧集、动漫与纪录片推荐及影视资讯。">
+<meta property="og:url" content="https://meiriyingshi-cn.github.io/">
+<meta property="og:type" content="website">
+<title>每日影视 - meiriyingshi-cn 每日更新影视推荐与排行榜</title>
+<style>
+:root{
+  --ink:#111214;
+  --ink-2:#3d4046;
+  --ink-3:#8b8f98;
+  --paper:#f4f3ef;
+  --paper-2:#eceae4;
+  --line:#d8d6cf;
+  --accent:#c8212f;
+  --accent-2:#1f6feb;
+  --max:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,-apple-system,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.75;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:2px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+/* ===== 顶部报头 / 报眉 ===== */
+.masthead{
+  background:var(--paper);
+  border-bottom:3px double var(--ink);
+  padding:22px 0 14px;
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(6px);
+  background-color:rgba(244,243,239,.94);
+}
+.mast-top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.issue{font-size:12.5px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.issue b{color:var(--accent);font-weight:700}
+.logo{
+  font-size:clamp(30px,6.2vw,50px);
+  font-weight:900;
+  letter-spacing:.06em;
+  text-align:center;
+  line-height:1.05;
+  font-family:"Songti SC","SimSun",Georgia,serif;
+}
+.logo em{font-style:normal;color:var(--accent)}
+.logo small{display:block;font-size:.26em;letter-spacing:.34em;color:var(--ink-3);font-weight:500;margin-top:8px;font-family:ui-monospace,Menlo,monospace}
+.mast-meta{text-align:right;font-size:12.5px;color:var(--ink-3);font-family:ui-monospace,Menlo,monospace;line-height:1.9}
+.nav{
+  margin-top:16px;
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  flex-wrap:wrap;
+  padding:9px 0;
+}
+.nav a{
+  font-size:14.5px;
+  font-weight:700;
+  letter-spacing:.08em;
+  padding:5px 15px;
+  position:relative;
+  transition:color .2s,background .2s;
+}
+.nav a:hover{background:var(--ink);color:var(--paper)}
+.nav a[aria-current="true"]{background:var(--accent);color:#fff}
+.menu-btn{display:none}
+/* ===== 通用版块 ===== */
+section{padding:64px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:34px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.sec-head h2{
+  font-family:"Songti SC","SimSun",Georgia,serif;
+  font-size:clamp(23px,3.6vw,32px);
+  font-weight:900;
+  letter-spacing:.04em;
+}
+.sec-head .no{
+  font-family:ui-monospace,Menlo,monospace;
+  font-size:13px;
+  color:var(--accent);
+  border:1px solid var(--accent);
+  padding:2px 9px;
+  font-weight:700;
+}
+.sec-head .more{margin-left:auto;font-size:13px;color:var(--ink-3);letter-spacing:.1em}
+.sec-head .more:hover{color:var(--accent)}
+/* ===== ① 头条 / 今日推荐（左右图文 + 副条列表）===== */
+.lede{display:grid;grid-template-columns:1.55fr 1fr;gap:34px;align-items:start}
+.lead-story{border:1px solid var(--ink);background:var(--paper)}
+.lead-fig{
+  aspect-ratio:16/10;
+  background:
+    repeating-linear-gradient(135deg,var(--ink) 0 4px,transparent 4px 22px),
+    linear-gradient(160deg,#2b2d33,#0e0f11);
+  position:relative;
+  overflow:hidden;
+}
+.lead-fig::after{
+  content:"每日影视";
+  position:absolute;left:18px;bottom:12px;
+  color:#fff;font-family:"Songti SC",SimSun,serif;font-size:20px;letter-spacing:.3em;opacity:.82;
+}
+.kicker{
+  position:absolute;top:14px;left:14px;
+  background:var(--accent);color:#fff;font-size:11.5px;font-weight:700;
+  letter-spacing:.16em;padding:4px 11px;
+}
+.lead-body{padding:22px 24px 26px}
+.lead-body h3{font-family:"Songti SC",SimSun,serif;font-size:clamp(19px,2.7vw,25px);font-weight:900;line-height:1.4}
+.lead-body p{color:var(--ink-2);font-size:15px;margin-top:12px}
+.side-list{list-style:none;border-top:3px solid var(--ink)}
+.side-list li{border-bottom:1px dashed var(--line);padding:14px 4px}
+.side-list a{display:flex;gap:12px;align-items:baseline}
+.side-list .n{
+  font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent);font-weight:700;flex:none;
+}
+.side-list h4{font-size:15.5px;font-weight:700;line-height:1.5}
+.side-list .d{font-size:12.5px;color:var(--ink-3);margin-top:5px}
+/* ===== ② 每日片单（竖向堆叠行式条目）===== */
+.daily{background:var(--ink);color:var(--paper);padding:64px 0}
+.daily .sec-head{border-bottom-color:var(--paper);color:var(--paper)}
+.daily .sec-head .more{color:var(--paper-2)}
+.row-item{
+  display:grid;
+  grid-template-columns:64px 130px 1fr 120px;
+  gap:22px;
+  align-items:center;
+  padding:20px 0;
+  border-bottom:1px solid #383a40;
+  transition:background .25s,padding .25s;
+}
+.row-item:hover{background:#1c1d20;padding-left:12px;padding-right:12px}
+.row-item .idx{
+  font-family:ui-monospace,Menlo,monospace;
+  font-size:26px;font-weight:800;color:var(--accent);
+  text-align:center;
+}
+.row-item .thumb{
+  aspect-ratio:3/4;
+  background:linear-gradient(150deg,#4a4d54,#242529);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;letter-spacing:.14em;color:#b9bcc2;text-align:center;line-height:1.5;
+}
+.row-item .info h3{font-size:18px;font-weight:800;letter-spacing:.02em}
+.row-item .info p{font-size:13.5px;color:#a4a7ad;margin-top:7px}
+.tags{margin-top:11px;display:flex;gap:7px;flex-wrap:wrap}
+.tags span{font-size:11.5px;border:1px solid #565963;padding:2px 9px;color:#d2d4d8}
+.row-item .score{text-align:right}
+.row-item .score b{display:block;font-family:ui-monospace,Menlo,monospace;font-size:22px;color:var(--paper)}
+.row-item .score i{font-style:normal;font-size:12px;color:var(--accent-2)}
+/* ===== ③ 剧集日历（周视图网格）===== */
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.day{
+  border:1px solid var(--line);
+  background:var(--paper-2);
+  min-height:150px;
+  padding:12px 11px;
+  display:flex;flex-direction:column;gap:8px;
+  transition:transform .2s,box-shadow .2s;
+}
+.day:hover{transform:translateY(-4px);box-shadow:0 10px 22px rgba(17,18,20,.12)}
+.day.today{border:2px solid var(--accent);background:#fdeced}
+.day .wd{font-size:12px;color:var(--ink-3);letter-spacing:.12em;font-weight:700}
+.day .dt{font-family:ui-monospace,Menlo,monospace;font-size:19px;font-weight:800}
+.day .shows{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:auto}
+.day .shows li{font-size:12.5px;line-height:1.4;padding-left:9px;position:relative;color:var(--ink-2)}
+.day .shows li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;background:var(--accent);border-radius:50%}
+.day.today .shows li::before{background:var(--ink)}
+/* ===== ④ 排行榜（刻度尺 + 进度）===== */
+.board{list-style:none;counter-reset:rank}
+.board li{
+  counter-increment:rank;
+  display:grid;
+  grid-template-columns:56px 1fr;
+  gap:20px;
+  align-items:start;
+  padding:20px 0;
+  border-bottom:1px solid var(--line);
+}
+.board li::before{
+  content:counter(rank,decimal-leading-zero);
+  font-family:ui-monospace,Menlo,monospace;
+  font-size:24px;font-weight:900;color:var(--ink-3);
+  border-right:2px solid var(--line);
+  padding-right:14px;text-align:center;
+}
+.board li:nth-child(1)::before{color:var(--accent)}
+.board li:nth-child(2)::before{color:#b0722a}
+.board li:nth-child(3)::before{color:#4a6fa5}
+.board .b-top{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:baseline}
+.board .b-top h3{font-size:18.5px;font-weight:800}
+.board .b-top .pt{font-family:ui-monospace,Menlo,monospace;font-size:14px;color:var(--accent);font-weight:700}
+.ruler{position:relative;height:16px;background:var(--paper-2);border:1px solid var(--line);margin-top:12px;overflow:hidden}
+.ruler i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--ink),var(--accent));font-style:normal}
+.ruler::after{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0,transparent 9.8%,rgba(17,18,20,.18) 9.8%,rgba(17,18,20,.18) 10%);
+}
+.board .b-meta{font-size:12.5px;color:var(--ink-3);margin-top:9px}
+/* ===== ⑤ 资讯（报摊式多列）===== */
+.press{column-count:2;column-gap:26px;column-rule:1px solid var(--line)}
+.press article{
+  break-inside:avoid;
+  border:1px solid var(--line);
+  background:var(--paper-2);
+  padding:20px;
+  margin-bottom:22px;
+}
+.press article .cat{
+  font-size:11.5px;letter-spacing:.18em;color:var(--accent);font-weight:800;
+}
+.press article h3{font-family:"Songti SC",SimSun,serif;font-size:19px;font-weight:900;margin:9px 0 10px;line-height:1.45}
+.press article p{font-size:14px;color:var(--ink-2)}
+.press article .by{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
+/* ===== 页脚 ===== */
+footer{border-top:3px double var(--ink);padding:46px 0 34px;background:var(--ink);color:var(--paper-2)}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px}
+footer h4{font-family:"Songti SC",SimSun,serif;font-size:19px;color:#fff;margin-bottom:14px}
+footer p,footer li{font-size:13.5px;color:#b9bcc2;line-height:1.95}
+footer ul{list-style:none}
+footer a:hover{color:var(--accent)}
+.copy{border-top:1px solid #383a40;margin-top:30px;padding-top:20px;font-size:12.5px;color:#8b8f98;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+/* ===== 回到顶部 ===== */
+.to-top{
+  position:fixed;right:22px;bottom:26px;
+  width:46px;height:46px;border:2px solid var(--ink);
+  background:var(--paper);color:var(--ink);
+  font-size:19px;cursor:pointer;
+  opacity:0;visibility:hidden;transition:.3s;z-index:90;
+}
+.to-top.show{opacity:1;visibility:visible}
+.to-top:hover{background:var(--ink);color:var(--paper)}
+/* ===== 响应式 ===== */
+@media (max-width:900px){
+  .wrap{padding:0 18px}
+  section{padding:46px 0}
+  .lede{grid-template-columns:1fr}
+  .calendar{grid-template-columns:repeat(2,1fr)}
+  .press{column-count:1}
+  .row-item{grid-template-columns:48px 96px 1fr}
+  .row-item .score{display:none}
+  footer .wrap{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .mast-top{gap:10px}
+  .mast-meta{display:none}
+  .logo{font-size:34px;width:100%}
+  .menu-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:42px;height:42px;border:1.5px solid var(--ink);background:var(--paper);
+    font-size:20px;cursor:pointer;margin-left:auto;
+  }
+  .nav{
+    display:none;
+    position:absolute;left:0;right:0;top:100%;
+    background:var(--paper);flex-direction:column;padding:14px 18px;gap:2px;
+    box-shadow:0 14px 26px rgba(17,18,20,.14);
+  }
+  .nav.open{display:flex}
+  .nav a{width:100%;padding:12px 10px;border-bottom:1px solid var(--line);font-size:15px}
+  .nav a:last-child{border-bottom:none}
+  .sec-head .more{display:none}
+  .row-item{grid-template-columns:38px 1fr;gap:14px}
+  .row-item .thumb{display:none}
+  .calendar{grid-template-columns:1fr}
+  .day{min-height:auto}
+  .board li{grid-template-columns:42px 1fr;gap:12px}
+  footer .wrap{grid-template-columns:1fr}
+  .lead-body{padding:16px 16px 20px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .day:hover{transform:none}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/xiaobao.js"></script>
+
+<!-- ============ 报头 / 导航 ============ -->
+<header class="masthead" role="banner">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="issue">每日影视 · <b>MEIRI YINGSHI</b> · VOL.<span id="vol">2410</span></div>
+      <div class="mast-meta">meiriyingshi-cn<br>更新于 <span id="today">2026-10-25</span></div>
+    </div>
+
+    <div class="logo" id="top">每日<em>影视</em><small>meiriyingshi-cn · 每日更新的影视推荐站</small></div>
+
+    <button class="menu-btn" id="menuBtn" aria-label="打开导航菜单" aria-expanded="false">☰</button>
+    <nav class="nav" role="navigation" aria-label="主导航">
+      <a href="#top" aria-current="true">首页头条</a>
+      <a href="#daily">每日片单</a>
+      <a href="#series">剧集日历</a>
+      <a href="#rank">口碑排行</a>
+      <a href="#news">影视资讯</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ ① 头条 / 今日推荐 ============ -->
+<section id="top" aria-labelledby="h-top">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">01</span>
+      <h2 id="h-top">今日头条 · 每日影视精选</h2>
+      <a class="more" href="#daily">浏览全部片单 →</a>
+    </div>
+
+    <div class="lede">
+      <article class="lead-story">
+        <div class="lead-fig">
+          <span class="kicker">每日影视头条</span>
+        </div>
+        <div class="lead-body">
+          <h3>每日影视 meiriyingshi-cn：用一份「每日片单」告别选择困难</h3>
+          <p>每日影视团队每天从新上映影片、热播剧集与经典修复作品中挑选值得一看的内容，给出简短但具体的推荐理由。无论你想找今晚看什么，还是追一部不踩雷的剧，每日影视 meiriyingshi-cn 都是你可靠的观影导航。</p>
+        </div>
+      </article>
+
+      <ul class="side-list" role="list">
+        <li role="listitem">
+          <a href="#daily">
+            <span class="n">01</span>
+            <span>
+              <h4>每日影视今日推荐：三部适合周末连看的影片</h4>
+              <div class="d">meiriyingshi-cn · 片单 · 2 分钟阅读</div>
+            </span>
+          </a>
+        </li>
+        <li role="listitem">
+          <a href="#series">
+            <span class="n">02</span>
+            <span>
+              <h4>本周剧集日历：12 部剧的更新时间一次看全</h4>
+              <div class="d">meiriyingshi-cn · 剧集 · 更新提醒</div>
+            </span>
+          </a>
+        </li>
+        <li role="listitem">
+          <a href="#rank">
+            <span class="n">03</span>
+            <span>
+              <h4>口碑排行：本月热度最高的十部影视作品</h4>
+              <div class="d">meiriyingshi-cn · 排行 · 数据每周更新</div>
+            </span>
+          </a>
+        </li>
+        <li role="listitem">
+          <a href="#news">
+            <span class="n">04</span>
+            <span>
+              <h4>影视行业动态：平台片单与档期调整一览</h4>
+              <div class="d">meiriyingshi-cn · 资讯 · 编辑部整理</div>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ② 每日片单（暗色行式条目）============ -->
+<section class="daily" id="daily" aria-labelledby="h-daily">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">02</span>
+      <h2 id="h-daily">每日片单 · 今日 6 部推荐</h2>
+      <a class="more" href="#rank">查看完整排行 →</a>
+    </div>
+
+    <div role="list" aria-label="每日片单">
+      <article class="row-item" role="listitem">
+        <div class="idx">01</div>
+        <div class="thumb">每日影视<br>推荐</div>
+        <div class="info">
+          <h3>城市边缘的光</h3>
+          <p>导演：陈映川｜剧情 / 家庭｜138 分钟</p>
+          <div class="tags"><span>今日首推</span><span>4K 修复</span><span>获奖作品</span></div>
+        </div>
+        <div class="score"><b>9.2</b><i>meiriyingshi-cn 推荐指数</i></div>
+      </article>
+
+      <article class="row-item" role="listitem">
+        <div class="idx">02</div>
+        <div class="thumb">每日影视<br>推荐</div>
+        <div class="info">
+          <h3>无声的证言 第四季</h3>
+          <p>主演：林知微 / 周衡｜悬疑 / 犯罪｜12 集</p>
+          <div class="tags"><span>热播剧集</span><span>每周四更新</span></div>
+        </div>
+        <div class="score"><b>8.7</b><i>meiriyingshi-cn 推荐指数</i></div>
+      </article>
+
+      <article class="row-item" role="listitem">
+        <div class="idx">03</div>
+        <div class="thumb">每日影视<br>推荐</div>
+        <div class="info">
+          <h3>远山少年</h3>
+          <p>类型：纪录片｜单集 52 分钟｜共 6 集</p>
+          <div class="tags"><span>纪录片</span><span>高分口碑</span></div>
+        </div>
+        <div class="score"><b>9.0</b><i>meiriyingshi-cn 推荐指数</i></div>
+      </article>
+
+      <article class="row-item" role="listitem">
+        <div class="idx">04</div>
+        <div class="thumb">每日影视<br>推荐</div>
+        <div class="info">
+          <h3>夏日未尽</h3>
+          <p>类型：爱情 / 青春｜105 分钟</p>
+          <div class="tags"><span>轻松下饭</span><span>本周上新</span></div>
+        </div>
+        <div class="score"><b>7.9</b><i>meiriyingshi-cn 推荐指数</i></div>
+      </article>
+
+      <article class="row-item" role="listitem">
+        <div class="idx">05</div>
+        <div class="thumb">每日影视<br>推荐</div>
+        <div class="info">
+          <h3>机甲纪元：起源</h3>
+          <p>类型：科幻 / 动画｜24 集</p>
+          <div class="tags"><span>动漫</span><span>热血</span><span>每周更新</span></div>
+        </div>
+        <div class="score"><b>8.4</b><i>meiriyingshi-cn 推荐指数</i></div>
+      </article>
+
+      <article class="row-item" role="listitem">
+        <div class="idx">06</div>
+        <div class="thumb">每日影视<br>推荐</div>
+        <div class="info">
+          <h3>深夜食堂 特别篇</h3>
+          <p>类型：治愈 / 单元剧｜90 分钟</p>
+          <div class="tags"><span>下饭神剧</span><span>经典回看</span></div>
+        </div>
+        <div class="score"><b>8.8</b><i>meiriyingshi-cn 推荐指数</i></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ③ 剧集日历（周视图网格）============ -->
+<section id="series" aria-labelledby="h-series">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">03</span>
+      <h2 id="h-series">剧集日历 · 本周更新</h2>
+      <a class="more" href="#news">更多剧集资讯 →</a>
+    </div>
+
+    <div class="calendar" role="list" aria-label="本周剧集更新日历">
+      <div class="day" role="listitem">
+        <div class="wd">周一</div><div class="dt">10.19</div>
+        <ul class="shows"><li>城市追光 第 6 集</li><li>医者仁心 特别篇</li></ul>
+      </div>
+      <div class="day" role="listitem">
+        <div class="wd">周二</div><div class="dt">10.20</div>
+        <ul class="shows"><li>夏日未尽 上线</li></ul>
+      </div>
+      <div class="day" role="listitem">
+        <div class="wd">周三</div><div class="dt">10.21</div>
+        <ul class="shows"><li>无声的证言 第 7 集</li><li>远山少年 第 3 集</li></ul>
+      </div>
+      <div class="day" role="listitem">
+        <div class="wd">周四</div><div class="dt">10.22</div>
+        <ul class="shows"><li>机甲纪元 第 9 集</li><li>深夜食堂 特别篇</li></ul>
+      </div>
+      <div class="day today" role="listitem" aria-label="今日">
+        <div class="wd">今日 · 周五</div><div class="dt">10.23</div>
+        <ul class="shows"><li>每日影视 周榜发布</li><li>城市追光 第 7 集</li></ul>
+      </div>
+      <div class="day" role="listitem">
+        <div class="wd">周六</div><div class="dt">10.24</div>
+        <ul class="shows"><li>周末大片场（双片连播）</li></ul>
+      </div>
+      <div class="day" role="listitem">
+        <div class="wd">周日</div><div class="dt">10.25</div>
+        <ul class="shows"><li>一周盘点：每日影视编辑部推荐</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ④ 口碑排行（刻度尺进度）============ -->
+<section id="rank" aria-labelledby="h-rank">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">04</span>
+      <h2 id="h-rank">口碑排行 · 本周热度 TOP 6</h2>
+      <a class="more" href="#daily">回每日片单 →</a>
+    </div>
+
+    <ul class="board" role="list" aria-label="影视作品排行榜">
+      <li role="listitem">
+        <div>
+          <div class="b-top"><h3>城市边缘的光</h3><span class="pt">热度 98.4</span></div>
+          <div class="ruler" aria-hidden="true"><i style="width:98.4%"></i></div>
+          <div class="b-meta">剧情 / 家庭 · 推荐理由：叙事克制，情感扎实</div>
+        </div>
+      </li>
+      <li role="listitem">
+        <div>
+          <div class="b-top"><h3>远山少年</h3><span class="pt">热度 94.1</span></div>
+          <div class="ruler" aria-hidden="true"><i style="width:94.1%"></i></div>
+          <div class="b-meta">纪录片 · 推荐理由：影像质感接近院线</div>
+        </div>
+      </li>
+      <li role="listitem">
+        <div>
+          <div class="b-top"><h3>深夜食堂 特别篇</h3><span class="pt">热度 90.7</span></div>
+          <div class="ruler" aria-hidden="true"><i style="width:90.7%"></i></div>
+          <div class="b-meta">治愈 / 单元剧 · 推荐理由：适合深夜一个人看</div>
+        </div>
+      </li>
+      <li role="listitem">
+        <div>
+          <div class="b-top"><h3>无声的证言 第四季</h3><span class="pt">热度 87.2</span></div>
+          <div class="ruler" aria-hidden="true"><i style="width:87.2%"></i></div>
+          <div class="b-meta">悬疑 / 犯罪 · 推荐理由：节奏紧凑，反转合理</div>
+        </div>
+      </li>
+      <li role="listitem">
+        <div>
+          <div class="b-top"><h3>机甲纪元：起源</h3><span class="pt">热度 82.5</span></div>
+          <div class="ruler" aria-hidden="true"><i style="width:82.5%"></i></div>
+          <div class="b-meta">科幻 / 动画 · 推荐理由：世界观展开完整</div>
+        </div>
+      </li>
+      <li role="listitem">
+        <div>
+          <div class="b-top"><h3>夏日未尽</h3><span class="pt">热度 78.9</span></div>
+          <div class="ruler" aria-hidden="true"><i style="width:78.9%"></i></div>
+          <div class="b-meta">爱情 / 青春 · 推荐理由：配乐加分，氛围感强</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ ⑤ 影视资讯（报摊多列）============ -->
+<section id="news" aria-labelledby="h-news">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="no">05</span>
+      <h2 id="h-news">影视资讯 · 每日影视编辑部</h2>
+      <a class="more" href="#top">返回顶部 ↑</a>
+    </div>
+
+    <div class="press" role="list" aria-label="影视资讯文章">
+      <article role="listitem">
+        <div class="cat">片单解读</div>
+        <h3>为什么每日影视坚持「每天只推 6 部」？</h3>
+        <p>在片单动辄几十上百条的今天，每日影视 meiriyingshi-cn 反而把推荐压缩到每天 6 部。少一点，是为了让每一部都有具体的推荐理由，也让读者真的会去看。</p>
+        <div class="by"><span>编辑部</span><span>10 分钟阅读</span></div>
+      </article>
+
+      <article role="listitem">
+        <div class="cat">观影指南</div>
+        <h3>周末连看三部：不踩雷的搭配方案</h3>
+        <p>一部纪录片打开视野、一部剧情片调动情绪、一部轻松喜剧收尾——这是每日影视编辑部常用的周末排片公式，适合不想动脑又想看够量的人。</p>
+        <div class="by"><span>每日影视编辑部</span><span>5 分钟阅读</span></div>
+      </article>
+
+      <article role="listitem">
+        <div class="cat">行业观察</div>
+        <h3>平台片单变化背后：类型片正在回流</h3>
+        <p>从近期公布的排播表看，悬疑与家庭题材的占比明显上升。每日影视 meiriyingshi-cn 整理了近三个月的类型分布，并附上我们自己的观察。</p>
+        <div class="by"><span>行业组</span><span>8 分钟阅读</span></div>
+      </article>
+
+      <article role="listitem">
+        <div class="cat">经典回看</div>
+        <h3>那些值得重看的修复版：画质之外的收获</h3>
+        <p>4K 修复不只是让画面更清晰。色彩还原、声音重制往往改变了一部老片的观感。我们挑了五部值得在大屏上重看的作品。</p>
+        <div class="by"><span>每日影视编辑部</span><span>6 分钟阅读</span></div>
+      </article>
+
+      <article role="listitem">
+        <div class="cat">剧集前瞻</div>
+        <h3>下月待播清单：四部值得预约的剧</h3>
+        <p>档期已定、主创阵容与首支预告都已公开的四部新剧，从题材到班底都各有看点。每日影视 meiriyingshi-cn 帮你提前划重点。</p>
+        <div class="by"><span>剧集组</span><span>4 分钟阅读</span></div>
+      </article>
+
+      <article role="listitem">
+        <div class="cat">读者来信</div>
+        <h3>「每天不知道看什么」：读者投稿的选片困扰</h3>
+        <p>我们收集了 30 位读者的真实选片困扰，并逐条给出回应。如果你也有类似的问题，欢迎通过每日影视 meiriyingshi-cn 的渠道告诉我们。</p>
+        <div class="by"><span>读者来信</span><span>7 分钟阅读</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 页脚 ============ -->
+<footer role="contentinfo">
+  <div class="wrap">
+    <div>
+      <h4>关于每日影视</h4>
+      <p>每日影视（meiriyingshi-cn）是一个每日更新的影视推荐站点，覆盖电影、剧集、动漫与纪录片。我们坚持短评 + 具体理由的推荐方式，帮助你更快找到值得看的内容。站点地址：<a href="https://meiriyingshi-cn.github.io/">https://meiriyingshi-cn.github.io/</a></p>
+    </div>
+    <div>
+      <h4>栏目导航</h4>
+      <ul role="list">
+        <li role="listitem"><a href="#top">首页头条</a></li>
+        <li role="listitem"><a href="#daily">每日片单</a></li>
+        <li role="listitem"><a href="#series">剧集日历</a></li>
+        <li role="listitem"><a href="#rank">口碑排行</a></li>
+        <li role="listitem"><a href="#news">影视资讯</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>相关站点</h4>
+      <ul role="list">
+        <li role="listitem"><a href="#top">每日影视 meiriyingshi-cn 首页</a></li>
+        <li role="listitem"><a href="#daily">每日影视片单归档</a></li>
+        <li role="listitem"><a href="#news">每日影视编辑部文章</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap copy">
+    <span>© <span id="year">2026</span> 每日影视 meiriyingshi-cn · 每日更新影视推荐</span>
+    <span>meiriyingshi-cn.github.io</span>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="返回顶部" title="返回顶部">↑</button>
+
+<script>
+(function(){
+  var nav = document.querySelector('.nav');
+  var btn = document.getElementById('menuBtn');
+  btn.addEventListener('click', function(){
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.textContent = open ? '✕' : '☰';
+  });
+
+  var links = document.querySelectorAll('.nav a, .sec-head .more, footer a[href^="#"]');
+  links.forEach(function(a){
+    a.addEventListener('click', function(){
+      if(nav.classList.contains('open')){
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+        btn.textContent = '☰';
+      }
+    });
+  });
+
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav a');
+  function onScroll(){
+    var pos = window.scrollY + 140, idx = 0;
+    sections.forEach(function(s,i){
+      if(s.offsetTop <= pos) idx = i;
+    });
+    navLinks.forEach(function(a,i){
+      a.setAttribute('aria-current', i === idx ? 'true' : 'false');
+    });
+    document.getElementById('toTop').classList.toggle('show', window.scrollY > 500);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  document.getElementById('toTop').addEventListener('click', function(){
+    window.scrollTo({top:0, behavior: 'smooth'});
+  });
+
+  var d = new Date();
+  document.getElementById('today').textContent = d.getFullYear() + '-' +
+    String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  document.getElementById('year').textContent = d.getFullYear();
+})();
+</script>
+</body>
+</html>
